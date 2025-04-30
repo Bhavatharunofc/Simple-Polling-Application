@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile - Online Voting System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .profile-container {
+            display: flex;
+            margin: 40px 0;
+            gap: 40px;
+        }
+        
+        .profile-sidebar {
+            width: 300px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            align-self: flex-start;
+        }
+        
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #eee;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: #777;
+        }
+        
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-info h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .profile-info p {
+            text-align: center;
+            color: #777;
+            margin-bottom: 20px;
+        }
+        
+        .profile-stats {
+            margin-top: 30px;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-label {
+            color: #777;
+        }
+        
+        .stat-value {
+            font-weight: 500;
+        }
+        
+        .profile-main {
+            flex: 1;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+        }
+        
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .profile-header h1 {
+            color: var(--dark-color);
+        }
+        
+        .voting-status {
+            padding: 10px 20px;
+            background-color: var(--success-color);
+            color: white;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        
+        .voting-status.not-voted {
+            background-color: var(--accent-color);
+        }
+        
+        .section-title {
+            font-size: 20px;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-container {
+                flex-direction: column;
+            }
+            
+            .profile-sidebar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">VoteSecure</a>
+                <ul class="nav-links">
+                    <li><a href="/profile">Profile</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="profile-container">
+            <div class="profile-sidebar">
+                <div class="profile-picture">
+                    {{ user.full_name[0] }}
+                </div>
+                <div class="profile-info">
+                    <h2>{{ user.full_name }}</h2>
+                    <p>@{{ user.username }}</p>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Voter ID</span>
+                        <span class="stat-value">{{ user.voter_id }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Member Since</span>
+                        <span class="stat-value">{{ user.created_at.strftime('%b %Y') }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Email</span>
+                        <span class="stat-value">{{ user.email }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="profile-main">
+                <div class="profile-header">
+                    <h1>Your Profile</h1>
+                    <div class="voting-status {% if not has_voted %}not-voted{% endif %}">
+                        {% if has_voted %}Voted{% else %}Not Voted Yet{% endif %}
+                    </div>
+                </div>
+                
+                <h3 class="section-title">Account Information</h3>
+                <p>Username: {{ user.username }}</p>
+                <p>Full Name: {{ user.full_name }}</p>
+                <p>Email: {{ user.email }}</p>
+                <p>Voter ID: {{ user.voter_id }}</p>
+                
+                <div style="margin-top: 30px;">
+                    {% if not has_voted %}
+                    <a href="/vote" class="btn">Cast Your Vote Now</a>
+                    {% else %}
+                    <a href="/results" class="btn">View Election Results</a>
+                    {% endif %}
+                    <a href="/logout" class="btn btn-outline" style="margin-left: 15px;">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 VoteSecure. All rights reserved.</p>
+            <p>Making democracy accessible to everyone.</p>
+        </div>
+    </footer>
+</body>
+</html>

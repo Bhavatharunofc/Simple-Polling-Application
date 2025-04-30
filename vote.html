@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cast Your Vote - Online Voting System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .vote-header {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .vote-header h1 {
+            font-size: 36px;
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
+        
+        .vote-header p {
+            color: #777;
+            font-size: 18px;
+        }
+        
+        .position-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+        
+        .position-header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 20px;
+        }
+        
+        .position-header h2 {
+            font-size: 24px;
+        }
+        
+        .position-header p {
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        .candidates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .candidate-card {
+            border: 2px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .candidate-card:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .candidate-card.selected {
+            border-color: var(--success-color);
+            background-color: rgba(46, 204, 113, 0.05);
+        }
+        
+        .candidate-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #eee;
+            margin: 0 auto 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #777;
+        }
+        
+        .candidate-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .candidate-info {
+            text-align: center;
+        }
+        
+        .candidate-info h3 {
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .candidate-party {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .candidate-bio {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .vote-btn {
+            display: block;
+            background-color: var(--success-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 40px auto;
+            max-width: 300px;
+            text-align: center;
+        }
+        
+        .vote-btn:hover {
+            background-color: #27ae60;
+        }
+        
+        .vote-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 25px;
+            height: 25px;
+            background-color: var(--success-color);
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .selected .checkmark {
+            display: flex;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .candidates-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">VoteSecure</a>
+                <ul class="nav-links">
+                    <li><a href="/results">Results</a></li>
+                    <li><a href="/profile">Profile</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="vote-header">
+            <h1>Cast Your Vote</h1>
+            <p>Select your preferred candidate for each position</p>
+        </div>
+        
+        <form id="votingForm">
+            {% for position_id, data in positions.items() %}
+            <div class="position-card">
+                <div class="position-header">
+                    <h2>{{ data.position.title }}</h2>
+                    <p>{{ data.position.description }}</p>
+                </div>
+                
+                <div class="candidates-grid">
+                    {% for candidate in data.candidates %}
+                    <div class="candidate-card" data-position="{{ position_id }}" data-candidate="{{ candidate.id }}">
+                        <div class="candidate-photo">
+                            {% if candidate.photo %}
+                            <img src="{{ candidate.photo }}" alt="{{ candidate.name }}">
+                            {% else %}
+                            {{ candidate.name[0] }}
+                            {% endif %}
+                        </div>
+                        <div class="candidate-info">
+                            <h3>{{ candidate.name }}</h3>
+                            <div class="candidate-party">{{ candidate.party }}</div>
+                            <div class="candidate-bio">{{ candidate.bio }}</div>
+                        </div>
+                        <div class="checkmark">✓</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+            
+            <button type="button" id="submitVote" class="vote-btn" disabled>Submit Your Vote</button>
+        </form>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 VoteSecure. All rights reserved.</p>
+            <p>Making democracy accessible to everyone.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const submitBtn = document.getElementById('submitVote');
+            const selectedCandidates = {};
+    
+            document.querySelectorAll('.candidate-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const positionId = this.dataset.position;
+                    const candidateId = this.dataset.candidate;
+                    
+                    // Clear all selections for this position first
+                    document.querySelectorAll(`.candidate-card[data-position="${positionId}"]`)
+                        .forEach(c => c.classList.remove('selected'));
+                    
+                    // Select this candidate
+                    this.classList.add('selected');
+                    selectedCandidates[positionId] = candidateId;
+                    
+                    // Enable submit button if all positions have selections
+                    submitBtn.disabled = Object.keys(selectedCandidates).length !== 
+                        document.querySelectorAll('.position-card').length;
+                });
+            });
+    
+            submitBtn.addEventListener('click', async function() {
+                if (submitBtn.disabled) return;
+                
+                try {
+                    const response = await fetch('/vote', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(selectedCandidates)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        alert('Vote submitted successfully!');
+                        window.location.href = '/profile';
+                    } else {
+                        alert('Error: ' + (result.message || 'Failed to submit vote'));
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Network error - please try again');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
